@@ -1,0 +1,13 @@
+[project]
+name = "test-bank"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "allure-pytest>=2.16.2",
+    "psycopg2-binary>=2.9.13",
+    "pydantic>=2.14.1",
+    "pytest>=8.4.2",
+    "requests>=2.32.5",
+    "rstr>=3.2.2",
+    "sqlalchemy>=2.0.54",
+]

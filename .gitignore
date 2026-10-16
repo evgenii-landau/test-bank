@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Secrets
+.env
+
+# Tool caches
+.pytest_cache/
+.ruff_cache/
+
+# Allure
+allure-results/
+allure-report/
+
+# IDE and OS
+.idea/
+.DS_Store
