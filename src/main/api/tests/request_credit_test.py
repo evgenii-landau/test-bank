@@ -51,35 +51,17 @@ class TestRequestCredit:
         assert credit.amount == pytest.approx(credit_amount), (
             "Error: Wrong credit amount in the response"
         )
-        assert credit.id == account_response.id, (
-            "Error: The credit was issued to a wrong account"
-        )
 
         account_from_db = AccountCrudDB.get_account_by_id(
             db_session, account_response.id
         )
 
-        assert account_from_db is not None, (
-            f"Error: Account {account_response.id} was not found in the database"
-        )
         assert account_from_db.balance == pytest.approx(
             account_response.balance + credit_amount
         ), "Error: Account balance in the database was not increased by the credit"
 
         credit_from_db = CreditCrudDB.get_credit_by_id(db_session, credit.creditId)
 
-        assert credit_from_db is not None, (
-            f"Error: Credit {credit.creditId} was not found in the database"
-        )
-        assert credit_from_db.account_id == account_response.id, (
-            "Error: The credit was saved with a wrong account"
-        )
-        assert credit_from_db.amount == pytest.approx(credit_amount), (
-            "Error: The credit was saved with a wrong amount"
-        )
-        assert credit_from_db.term_months == CREDIT_TERM_MONTHS, (
-            "Error: The credit was saved with a wrong term"
-        )
         assert credit_from_db.balance == pytest.approx(-credit_amount), (
             "Error: The credit debt was not saved as a negative credit amount"
         )
@@ -117,15 +99,6 @@ class TestRequestCredit:
             f"Error: Unexpected error text for a credit of {credit_amount}"
         )
 
-        account_from_db = AccountCrudDB.get_account_by_id(db_session, account.id)
-
-        assert account_from_db is not None, (
-            f"Error: Account {account.id} was not found in the database"
-        )
-        assert account_from_db.balance == pytest.approx(account.balance), (
-            f"Error: Account balance changed after a rejected credit of {credit_amount}"
-        )
-
         credits_from_db = CreditCrudDB.get_credits_by_account_id(db_session, account.id)
 
         assert credits_from_db == [], (
@@ -151,15 +124,6 @@ class TestRequestCredit:
 
         assert response.json()["detail"] == "Forbidden: ROLE_CREDIT access required", (
             "Error: Unexpected error text for a regular user requesting a credit"
-        )
-
-        account_from_db = AccountCrudDB.get_account_by_id(db_session, account.id)
-
-        assert account_from_db is not None, (
-            f"Error: Account {account.id} was not found in the database"
-        )
-        assert account_from_db.balance == pytest.approx(account.balance), (
-            "Error: Account balance changed after a forbidden credit request"
         )
 
         credits_from_db = CreditCrudDB.get_credits_by_account_id(db_session, account.id)

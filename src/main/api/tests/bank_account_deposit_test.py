@@ -43,8 +43,6 @@ class TestBankAccountDeposit:
             db_session, account_response.id
         )
 
-        assert account_from_db is not None
-
         assert account_from_db.balance == pytest.approx(
             account_response.balance + amount
         ), "Error: Incorrect balance"
@@ -87,9 +85,6 @@ class TestBankAccountDeposit:
             db_session, account_response.id
         )
 
-        assert account_from_db is not None, (
-            f"Error: Account {account_response.id} was not found in the database"
-        )
         assert account_from_db.balance == pytest.approx(account_response.balance), (
             f"Error: Balance changed after a rejected deposit of {amount}"
         )

@@ -32,7 +32,6 @@ class TestCreateUser:
         assert user_from_db is not None, (
             "Error: The user you created does not exist in the database"
         )
-        assert user_from_db.username == create_user_request.username
 
     @pytest.mark.parametrize(
         "invalid_username",

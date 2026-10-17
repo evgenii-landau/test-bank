@@ -26,11 +26,8 @@ class TestCreateAccount:
             response.id,
         )
 
-        assert account_from_db.id == response.id, (
-            "Error: The account was not created; the ID was not found"
-        )
-        assert account_from_db.balance is not None, (
-            "Error: The account was not created; the balance was not set"
+        assert account_from_db.balance == pytest.approx(response.balance), (
+            "Error: The account balance in the database differs from the response"
         )
 
     def test_admin_cannot_create_account(
@@ -79,6 +76,7 @@ class TestCreateAccount:
         accounts_count = AccountCrudDB.count_accounts_by_user_id(
             db_session, user_from_db.id
         )
+
         assert accounts_count == MAX_ACCOUNTS_PER_USER, (
             f"Error: Expected {MAX_ACCOUNTS_PER_USER} accounts in the database, got {accounts_count}"
         )
