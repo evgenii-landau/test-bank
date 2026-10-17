@@ -52,11 +52,11 @@ class TestCreateAccount:
         )
         assert accounts_count == 0, "Error: An account was created for the admin"
 
+    @pytest.mark.usefixtures("user_with_max_accounts")
     def test_user_cannot_create_more_than_two_accounts(
         self,
         api_manager: ApiManager,
         create_user_request: CreateUserRequest,
-        create_two_accounts,
         db_session: Session,
     ):
         account_fail_response = api_manager.user_steps.create_account_fail(

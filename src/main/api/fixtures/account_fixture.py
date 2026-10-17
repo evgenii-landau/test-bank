@@ -39,8 +39,8 @@ def target_account(
 
 
 @pytest.fixture
-def create_two_accounts(
+def user_with_max_accounts(
     api_manager: ApiManager, create_user_request: CreateUserRequest
-):
+) -> None:
     for _ in range(MAX_ACCOUNTS_PER_USER):
         api_manager.user_steps.create_account(create_user_request)
