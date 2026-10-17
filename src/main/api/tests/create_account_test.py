@@ -56,11 +56,9 @@ class TestCreateAccount:
         self,
         api_manager: ApiManager,
         create_user_request: CreateUserRequest,
+        create_two_accounts,
         db_session: Session,
     ):
-        for _ in range(MAX_ACCOUNTS_PER_USER):
-            api_manager.user_steps.create_account(create_user_request)
-
         account_fail_response = api_manager.user_steps.create_account_fail(
             create_user_request, ResponseSpecs.request_conflict()
         )
